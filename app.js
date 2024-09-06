@@ -31,12 +31,12 @@ app.delete("/products/:id", (req, res) => {
   Product.findById(id)
     .then(product => {
       if (!product) {
-        throw new Error("product not found")
+        return res.status(404).send({message: 'Product not found'})
       }
       product.remove()
       res.status(200).json({ message: "product successfully deleted" })
     })
-    .catch(error => res.status(404).json({ message: error }))
+    .catch(error => res.status(500).json({ message: error }))
 })
 
 app.listen(8888, () => {
